@@ -1,0 +1,32 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "journey of learning react",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shubham-kant/namaste-react.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Shubham Kant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shubham-kant/namaste-react/issues"
+  },
+  "homepage": "https://github.com/Shubham-kant/namaste-react#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.9.3",
+    "process": "^0.11.10"
+  },
+  "BrowsersList": [
+    "last 2 versions"
+  ]
+}

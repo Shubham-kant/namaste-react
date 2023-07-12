@@ -1,4 +1,6 @@
- //why 2 files - why not different file.
+import React  from "react";
+import ReactDOM from "react-dom/client";
+//why 2 files - why not different file.
         //because react also works on mobile.have u heard of react native.There are different places where react is used.
         const parent = React.createElement('div',{
             id:'parent',
