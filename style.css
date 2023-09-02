@@ -19,6 +19,13 @@
     font-weight: 700;
     
 }
+.login-btn {
+    cursor: pointer;
+    padding: 6px;
+    margin-left: 4px;
+    background-color: greenyellow;
+    border: none;
+}
 .restraunt-card-container {
     display: flex;
     flex-wrap: wrap;
@@ -51,4 +58,17 @@
     cursor: pointer;
     margin:10px;
     padding: 4px;
+}
+
+.shimmer-container {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.shimmer-card {
+    width: 220px;
+    margin: 6px;
+    height: 420px;
+    padding: 4px;
+    background-color: #F0F0F0;
 }

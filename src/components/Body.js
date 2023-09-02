@@ -1,20 +1,46 @@
 
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 //body 
 const Body = () => {
+    console.log('body component rendered again...');
     //local state variable
-    const [ListOfRestaurants,setListOfRestaurants] = useState(resList);
+    const [ListOfRestaurants,setListOfRestaurants] = useState([]);
+    const [FilteredRes,setFilteredRes] = useState([]);
     const [SearchedValue,setSearchedValue] = useState('');
-    return (
+    //called AFTER component rendered
+    //what ever you passed inside call back funcn,it will get executed after component gets rendered.
+    useEffect(()=>{
+        console.log('called AFTER component rendered');
+        fetchResData();
+    },[]);
+    async function fetchResData() {
+        //fetch returns a promise
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6436082&lng=77.08698369999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        console.log(data);
+        const json = await data.json();
+        console.log(json);
+        setListOfRestaurants(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants'])
+        setFilteredRes(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants'])
+    }
+    //loader - you can add a spinner here as well.
+    //a better approach is showing a shimmer UI
+    //api has not responded with the res list,so show shimmer UI instead of loader
+    //conditional rendering
+    // if(ListOfRestaurants?.length === 0) {
+    //     return <Shimmer/>
+    // }
+    //if resList.length ===0 return shimmer UI,when we get the api data render main UI #conditional rendering
+    return ListOfRestaurants?.length === 0 ?  <Shimmer/> :  (
         <div className="body-container">
             <div className="search-bar">
-                <input className="search" id="search-txt" type="text" placeholder="search resturant" onChange={(e)=>{setSearchedValue(e.target.value)}}/>
+                <input className="search" id="search-txt" value={SearchedValue} type="text" placeholder="search resturant" onChange={(e)=>{setSearchedValue(e.target.value)}}/>
                 <button className="search-btn" onClick={()=>{
                     // let searchedText = document.getElementById('search-txt').value;
                     // setSearchedValue(document.getElementById('search-txt').value);
-                    let filteresList = resList.filter((res)=> {
+                    // fetchResData();
+                    let filteresList = ListOfRestaurants?.filter((res)=> {
                         //exact match
                         // return res.info.name.toLowerCase() === searchedText.toLowerCase();
                         //partial match and exact match too 
@@ -23,21 +49,23 @@ const Body = () => {
                         return res.info.name.toLowerCase().includes(SearchedValue.toLowerCase());
                     }
                     );
-                    setListOfRestaurants(filteresList);
+                    // setListOfRestaurants(filteresList);
+                    setFilteredRes(filteresList);
+                   
                 }}>search</button>
             </div>
             <div className="filter">
                 <button className="filter-btn" onClick={()=> {
                     //setA(['bye']); // state variable value changed
                     // console.log(A);
-                    let filteresList = resList.filter(
+                    let filteresList = ListOfRestaurants.filter(
                         (res) => {
                             return res.info.avgRating > 4.3
                         }
                         );
                             //state variable value changed
-                    setListOfRestaurants(filteresList);
                    // console.log(resList1);
+                   setFilteredRes(filteresList);
                 }}>
                     Top rated restaurants
                 </button>
@@ -63,7 +91,7 @@ const Body = () => {
                     } */}
                     {/* {console.log(ListOfRestaurants)} */}
                 {
-                    ListOfRestaurants.map((restaurant)=> (
+                    FilteredRes?.map((restaurant)=> (
                         //returning a piece of JSX
                         // Returned restro card from here (in the end map returns the whole array and foreach won't)
                         <RestaurantCard  key={restaurant.info.id} resData={restaurant} />
