@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LOGO_URL } from "../utils/constant";
+import { Link } from "react-router-dom";
 const Header = () => {
     //use state variables to sync ui layer and data layer.
     //when state variables updates,component re - renders.
@@ -14,9 +15,16 @@ const Header = () => {
             <div className="nav-items">
                 <ul>
                     <li className="list-item">Home</li>
-                    <li className="list-item">About</li>
+                    <li className="list-item">
+                       <a href="/about">
+                        About
+                        </a> </li>
                     <li className="list-item">Cart</li>
-                    <li className="list-item">Contact us</li>
+                    <li className="list-item">
+                        <Link to="/contact">
+                        Contact us
+                        </Link>
+                        </li>
                     <button className="login-btn" onClick={()=>{
                         // btnName = "Logout";
                         SessionStatus === 'Login' ? setSessionStatus('Logout') : setSessionStatus('Login');

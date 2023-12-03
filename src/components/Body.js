@@ -2,6 +2,7 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 //body 
 const Body = () => {
     console.log('body component rendered again...');
@@ -21,8 +22,8 @@ const Body = () => {
         console.log(data);
         const json = await data.json();
         console.log(json);
-        setListOfRestaurants(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants'])
-        setFilteredRes(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants'])
+        setListOfRestaurants(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants']);
+        setFilteredRes(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants']);
     }
     //loader - you can add a spinner here as well.
     //a better approach is showing a shimmer UI
@@ -94,7 +95,10 @@ const Body = () => {
                     FilteredRes?.map((restaurant)=> (
                         //returning a piece of JSX
                         // Returned restro card from here (in the end map returns the whole array and foreach won't)
-                        <RestaurantCard  key={restaurant.info.id} resData={restaurant} />
+                        //link will prevent page refresh
+                        <Link to={"/restaurant-page/"+restaurant.info.id} key={restaurant.info.id}>
+                            <RestaurantCard resData={restaurant} />
+                        </Link>
                     ))
                 }
                 

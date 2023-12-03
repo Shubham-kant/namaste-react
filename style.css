@@ -35,6 +35,7 @@
     margin: 6px;
     /* height: 420px; */
     padding: 4px;
+    cursor: pointer;
 }
 .restaurant-card:hover {
     border: 1px solid black;

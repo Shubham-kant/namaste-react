@@ -3,6 +3,13 @@ import ReactDOM from "react-dom/client";
 //importing Header component so we can use it in this file
 import Header from "./components/Header";
 import Body from "./components/Body";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Error from "./components/Error";
+//`createBrowserRouter is `router to create react configuration and `RouterProvider` to pass config to app
+import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom'; 
+import RestaurantPage from "./components/RestaurantPage";
+import RestaurantCard from "./components/RestaurantCard";
 //BASICS PRACTICE START
 /*
 //why 2 files - why not different file.
@@ -126,9 +133,38 @@ const Header = () => (
 const AppLayout = () => {
     return <div className="app">
         <Header />
-        <Body />
+        <Outlet />
     </div>
 }
+//react configuration
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    children:[
+      {
+        path: '/',
+        element: <Body />
+      },
+      {
+        path: '/about',
+        element: <About />  //about is child of applayout here
+      },
+      {
+        path: '/contact',
+        element: <Contact />
+      },
+      {
+        path: '/restaurant-page/:resId',
+        element: <RestaurantPage />
+      }
+    ],
+    //for any route that is not in our config,below page will be rendered 
+    errorElement: <Error />
+  },
+  
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+//RouterProvider provides routing config to app.
+root.render(<RouterProvider router={appRouter} />);
