@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 //body 
 const Body = () => {
     console.log('body component rendered again...');
@@ -22,9 +23,18 @@ const Body = () => {
         console.log(data);
         const json = await data.json();
         console.log(json);
-        setListOfRestaurants(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants']);
-        setFilteredRes(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants']);
+        //API response changes sometimes data is coming in cards[1] sometimes in cards[2]
+        setListOfRestaurants(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants'] || json?.data?.cards[1]?.card?.card['gridElements']?.infoWithStyle['restaurants']);
+        setFilteredRes(json?.data?.cards[2]?.card?.card['gridElements']?.infoWithStyle['restaurants'] || json?.data?.cards[1]?.card?.card['gridElements']?.infoWithStyle['restaurants']);
     }
+    const onlineStatus = useOnlineStatus();
+    console.log(onlineStatus);
+    if(!onlineStatus) {
+        //you can also add a game for user to play if he is online or some good UI . TODO
+        return <h1>oops!!! You are offline.. Please check your internet..</h1>
+    }
+
+
     //loader - you can add a spinner here as well.
     //a better approach is showing a shimmer UI
     //api has not responded with the res list,so show shimmer UI instead of loader
@@ -91,6 +101,7 @@ const Body = () => {
                           })
                     } */}
                     {/* {console.log(ListOfRestaurants)} */}
+                    {console.log(FilteredRes)}
                 {
                     FilteredRes?.map((restaurant)=> (
                         //returning a piece of JSX

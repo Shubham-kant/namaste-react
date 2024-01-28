@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { LOGO_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+
 const Header = () => {
     //use state variables to sync ui layer and data layer.
     //when state variables updates,component re - renders.
     const [SessionStatus,setSessionStatus] = useState('Login');
     let btnName = 'login';
+    const onlineStatus = useOnlineStatus();
     console.log(SessionStatus);
     return (
         <div className="header">
@@ -14,6 +17,10 @@ const Header = () => {
             </div>
             <div className="nav-items">
                 <ul>
+                    <li className="list-item">
+                        Online status :  
+                        {onlineStatus ? " ✅" : ' 🔴'}
+                    </li>
                     <li className="list-item">Home</li>
                     <li className="list-item">
                        <a href="/about">

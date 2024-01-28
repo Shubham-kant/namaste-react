@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
-
+import useResPageInfo from "../utils/useResPageInfo";
 const RestaurantPage = () => {
+    /*
     const [resInfo, setResInfo] = useState(null);
     const {resId} = useParams();
     //above is short for below basically above is destructuring on the fly
@@ -32,15 +32,21 @@ const RestaurantPage = () => {
         // setResInfo([])
         console.log(resInfo);
     };
+    */
+    const {resId} = useParams();
+    //above is short for below basically above is destructuring on the fly
+    // const params = useParams();
+    // const resId = params.resId; 
+    const resInfo = useResPageInfo(resId);
     if (resInfo === null) {
         return <Shimmer />;
     }
     else {
-        console.log(resInfo);
+        //console.log(resInfo);
         //sometimes data is coming card[2] sometimes it is coming in card[1]
         const itemCards = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || resInfo?.cards[1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.categories[0]?.itemCards;
-        console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.categories[0]);
-        console.log('itemCards',itemCards);
+        //console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.categories[0]);
+       // console.log('itemCards',itemCards);
         const {name, costForTwoMessage, locality, cuisines} = resInfo?.cards[0]?.card?.card?.info
         //const {name, avgRating,cuisines, areaName, costForTwo,cloudinaryImageId} = resInfo[0]?.info;
         return (

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 //importing Header component so we can use it in this file
 import Header from "./components/Header";
 import Body from "./components/Body";
-import About from "./components/About";
+// import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 //`createBrowserRouter is `router to create react configuration and `RouterProvider` to pass config to app
@@ -136,6 +136,13 @@ const AppLayout = () => {
         <Outlet />
     </div>
 }
+
+// lazy loading/chunking/dynamic import/dynamic loading/code splitting/on demand loading
+
+//loading about component using Lazy loading.
+const About = lazy(() => import('./components/About'))
+
+
 //react configuration
 const appRouter = createBrowserRouter([
   {
@@ -148,7 +155,13 @@ const appRouter = createBrowserRouter([
       },
       {
         path: '/about',
-        element: <About />  //about is child of applayout here
+        element:
+         //about is child of applayout here
+         //loaded via lazy loading
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <About /> 
+        </Suspense>
+
       },
       {
         path: '/contact',
