@@ -11,23 +11,23 @@ const Header = () => {
     const onlineStatus = useOnlineStatus();
     console.log(SessionStatus);
     return (
-        <div className="header">
+        <div className="flex justify-between">
             <div className="logo-container">
-                <img className="logo" src={LOGO_URL} />
+                <img className="logo w-40" src={LOGO_URL} />
             </div>
-            <div className="nav-items">
-                <ul>
-                    <li className="list-item">
+            <div className="nav-items flex items-center">
+                <ul className="flex p-4">
+                    <li className="list-item p-2">
                         Online status :  
                         {onlineStatus ? " ✅" : ' 🔴'}
                     </li>
-                    <li className="list-item">Home</li>
-                    <li className="list-item">
+                    <li className="list-item p-2">Home</li>
+                    <li className="list-item p-2">
                        <a href="/about">
                         About
                         </a> </li>
-                    <li className="list-item">Cart</li>
-                    <li className="list-item">
+                    <li className="list-item p-2">Cart</li>
+                    <li className="list-item p-2">
                         <Link to="/contact">
                         Contact us
                         </Link>

@@ -44,44 +44,46 @@ const Body = () => {
     // }
     //if resList.length ===0 return shimmer UI,when we get the api data render main UI #conditional rendering
     return ListOfRestaurants?.length === 0 ?  <Shimmer/> :  (
-        <div className="body-container">
-            <div className="search-bar">
-                <input className="search" id="search-txt" value={SearchedValue} type="text" placeholder="search resturant" onChange={(e)=>{setSearchedValue(e.target.value)}}/>
-                <button className="search-btn" onClick={()=>{
-                    // let searchedText = document.getElementById('search-txt').value;
-                    // setSearchedValue(document.getElementById('search-txt').value);
-                    // fetchResData();
-                    let filteresList = ListOfRestaurants?.filter((res)=> {
-                        //exact match
-                        // return res.info.name.toLowerCase() === searchedText.toLowerCase();
-                        //partial match and exact match too 
-                        //'sub' will return subway and `bu` will return burger king and starbucks.
-                        //empty string will return all the data. 
-                        return res.info.name.toLowerCase().includes(SearchedValue.toLowerCase());
-                    }
-                    );
-                    // setListOfRestaurants(filteresList);
-                    setFilteredRes(filteresList);
-                   
-                }}>search</button>
-            </div>
-            <div className="filter">
-                <button className="filter-btn" onClick={()=> {
-                    //setA(['bye']); // state variable value changed
-                    // console.log(A);
-                    let filteresList = ListOfRestaurants.filter(
-                        (res) => {
-                            return res.info.avgRating > 4.3
+        <div className="body-container dark:bg-black">
+            <div className="search-bar items-center flex m-2 p-2">
+                <input className="p-2 border-2 border-solid border-black" id="search-txt" value={SearchedValue} type="text" placeholder="search resturant" onChange={(e)=>{setSearchedValue(e.target.value)}}/>
+                <div>
+                    <button className="px-4 py-2 mx-2 rounded-sm bg-purple-300" onClick={()=>{
+                        // let searchedText = document.getElementById('search-txt').value;
+                        // setSearchedValue(document.getElementById('search-txt').value);
+                        // fetchResData();
+                        let filteresList = ListOfRestaurants?.filter((res)=> {
+                            //exact match
+                            // return res.info.name.toLowerCase() === searchedText.toLowerCase();
+                            //partial match and exact match too 
+                            //'sub' will return subway and `bu` will return burger king and starbucks.
+                            //empty string will return all the data. 
+                            return res.info.name.toLowerCase().includes(SearchedValue.toLowerCase());
                         }
                         );
-                            //state variable value changed
-                   // console.log(resList1);
-                   setFilteredRes(filteresList);
-                }}>
-                    Top rated restaurants
-                </button>
+                        // setListOfRestaurants(filteresList);
+                        setFilteredRes(filteresList);
+                    
+                    }}>search</button>
+                </div>
+                <div>
+                    <button className="px-4 mx-2 py-2 rounded-sm bg-green-300" onClick={()=> {
+                        //setA(['bye']); // state variable value changed
+                        // console.log(A);
+                        let filteresList = ListOfRestaurants.filter(
+                            (res) => {
+                                return res.info.avgRating > 4.3
+                            }
+                            );
+                                //state variable value changed
+                    // console.log(resList1);
+                    setFilteredRes(filteresList);
+                    }}>
+                        Top rated restaurants
+                    </button>
+                </div>
             </div>
-            <div className="restraunt-card-container">
+            <div className="flex flex-wrap m-2">
                 {/* restraunt card will be a component bcoz there will be so many of them and we can reuse them */}
                 {/* Passing dynamic data into components, use props. Props are simply arguments to function*/}
                 {/* NOT WORKING WHY */}
